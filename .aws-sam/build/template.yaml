@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Forecast
+Transform:
+- AWS::Serverless-2016-10-31
+Resources:
+  getByCityForecastFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/get-forecast.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Timeout: 500
+      Description: Weather forecast information about city
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /city/{city}
+            Method: GET
+      CodeUri: getByCityForecastFunction
+Outputs:
+  WebEndpoint:
+    Description: API Gateway endpoint URL for Prod stage
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod
