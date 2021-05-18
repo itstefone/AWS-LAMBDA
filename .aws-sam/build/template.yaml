@@ -18,6 +18,21 @@ Resources:
             Path: /city/{city}
             Method: GET
       CodeUri: getByCityForecastFunction
+  getFileFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/get-file.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Timeout: 500
+      Description: Download by END POINT
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /file/{filename}
+            Method: GET
+      CodeUri: getFileFunction
 Outputs:
   WebEndpoint:
     Description: API Gateway endpoint URL for Prod stage

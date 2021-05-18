@@ -3,7 +3,7 @@ exports.handler= async (event) => {
 
     let city = event.pathParameters.city;
 
-    let url =   `https://api.weatherapi.com/v1/current.json?key=aa4af4aba2ac4f229d390048211705&q=${city}&aqi=no
+    let url = `https://api.weatherapi.com/v1/current.json?key=aa4af4aba2ac4f229d390048211705&q=${city}&aqi=no
     `;
 
     let body = await axios.get(url);
