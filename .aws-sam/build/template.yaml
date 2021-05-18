@@ -18,6 +18,21 @@ Resources:
             Path: /city/{city}
             Method: GET
       CodeUri: getByCityForecastFunction
+  getBucketFilesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/get-bucket-files.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Timeout: 500
+      Description: Weather forecast information about city
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /bucket/{city}
+            Method: GET
+      CodeUri: getBucketFilesFunction
 Outputs:
   WebEndpoint:
     Description: API Gateway endpoint URL for Prod stage
