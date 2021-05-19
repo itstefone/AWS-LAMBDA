@@ -1,59 +1,43 @@
+'use strict';
 const AWS = require('aws-sdk');
-const fs = require('fs');
+
+const bucketRegion = 'eu-central-1';
+const accessKeyId = 'AKIAZK4VMB5RKH4QHE6A';
+const secretAccessKey = '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';
+const srcBucket = 'stefoneimagebucket';
 
 const s3bucket = new AWS.S3({
-    accessKeyId: 'AKIAZK4VMB5RE32K5WF3',
-    secretAccessKey: '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',
-    region: 'eu-central-1',
+    accessKeyId,
+    secretAccessKey,
+    region:bucketRegion
 });
 
-const srcBucket = 'stefoneimagebucket';
+
 
 exports.handler = async (event,context, callback) => {
 const params = {
     Bucket: srcBucket,
-    Key: 'image-1.jpg'
+    Key: 'image-1.jpg',
+    // response
 }
-//const data = await s3bucket.listObjects(params).promise();
-s3bucket.getObject(params, (err, data) => {
-    if(err) console.log(err);
-    fs.writeFileSync('./' + 'image-1.jpg', data.Body);
+
+
+let listOfObjects =  s3bucket.listObjects({Bucket: srcBucket}).promise();
+
+
+let fileLinks = (await listOfObjects).Contents.map(f => {
+    return {
+        url: `https://${srcBucket}.s3.${bucketRegion}.amazonaws.com/${f.Key}`
+    };
 });
 
-// const files = data.Contents.map(file => {
-//     return {fileName: file.Key};
-// });
 
-// const s3Params = {Bucket: srcBucket, Key: 'image-1.jpg'};
 
-// const bucketObj = s3bucket.getObject(s3Params);
-
-    
-
-return true;
-
+return {
+    statusCode: 200,
+    body: JSON.stringify(fileLinks)
+}
 } 
 
-
-
-
-
-
-function getFromS3(fileName){
-    const params = {
-        Bucket: 'stefoneimagebucket',
-        Key: 'image-1.jpg',
-    };
-
-    return new Promise((resolve, reject) => {
-        s3bucket.getObject(params, function () {
-            if (err) {
-                return reject(err);
-            }
-
-            return resolve(data);
-        });
-    });
-}
 
 

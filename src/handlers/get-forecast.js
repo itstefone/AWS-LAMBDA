@@ -7,7 +7,6 @@ exports.handler= async (event) => {
     `;
 
     let body = await axios.get(url);
-
     const response = {
         statusCode: 200,
         body: JSON.stringify(body.data)
@@ -15,4 +14,23 @@ exports.handler= async (event) => {
 
 
     return response;
+}
+
+
+
+export function getFromS3(fileName, path){
+    const params = {
+        Bucket: bucketName,
+        Key: `${path}/${fileName}`,
+    };
+
+    return new Promise((resolve, reject) => {
+        s3bucket.getObject(params, function (err, data) {
+            if (err) {
+                return reject(err);
+            }
+
+            return resolve(data);
+        });
+    });
 }
