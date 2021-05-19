@@ -30,9 +30,24 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /file/{filename}
+            Path: /files
             Method: GET
       CodeUri: getFileFunction
+  uploadFileFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/upload-file.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Timeout: 500
+      Description: Upload file to bucket
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /upload
+            Method: POST
+      CodeUri: uploadFileFunction
 Outputs:
   WebEndpoint:
     Description: API Gateway endpoint URL for Prod stage

@@ -18,7 +18,6 @@ exports.handler = async (event,context, callback) => {
 const params = {
     Bucket: srcBucket,
     Key: 'image-1.jpg',
-    // response
 }
 
 
@@ -27,6 +26,7 @@ let listOfObjects =  s3bucket.listObjects({Bucket: srcBucket}).promise();
 
 let fileLinks = (await listOfObjects).Contents.map(f => {
     return {
+        fileName: f.Key,
         url: `https://${srcBucket}.s3.${bucketRegion}.amazonaws.com/${f.Key}`
     };
 });

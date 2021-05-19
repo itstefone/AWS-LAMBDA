@@ -6,6 +6,6 @@ codeuri = "/home/stefone/lambda/Forecast"
 runtime = "nodejs14.x"
 source_md5 = ""
 packagetype = "Zip"
-functions = ["getByCityForecastFunction", "getFileFunction"]
+functions = ["getByCityForecastFunction", "getFileFunction", "uploadFileFunction"]
 
 [layer_build_definitions]

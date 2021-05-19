@@ -45,8 +45,24 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /file/{filename}
+            Path: /files
             Method: GET
+     
+  uploadFileFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/upload-file.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Timeout: 500
+      Description: Upload file to bucket
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /upload
+            Method: POST          
+  
 
 
 
