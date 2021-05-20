@@ -10,13 +10,11 @@ Description: >-
 # Transform section specifies one or more macros that AWS CloudFormation uses to process your template
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-section-structure.html
 Transform:
-- AWS::Serverless-2016-10-31
+  - AWS::Serverless-2016-10-31
 
 # Resources declares the AWS resources that you want to include in the stack
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
 Resources:
-
-
   getByCityForecastFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -32,7 +30,6 @@ Resources:
             Path: /city/{city}
             Method: GET
 
-
   getFileFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -47,7 +44,22 @@ Resources:
           Properties:
             Path: /files
             Method: GET
-     
+
+  fileUploadFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/file-upload.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Timeout: 500
+      Description: Upload file
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /upload-file
+            Method: POST
+
   uploadFileFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -61,12 +73,9 @@ Resources:
           Type: Api
           Properties:
             Path: /upload
-            Method: POST          
-  
-
-
+            Method: POST
 
 Outputs:
   WebEndpoint:
-    Description: "API Gateway endpoint URL for Prod stage"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
+    Description: 'API Gateway endpoint URL for Prod stage'
+    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod'

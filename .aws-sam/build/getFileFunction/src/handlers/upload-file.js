@@ -36,23 +36,15 @@ exports.handler = async (event, context) => {
 
     // let data = s3bucket.upload(params).promise();
 
-
-
     let request = JSON.parse(event.body);
-
     let base64String = request.base64String;
+    let buffer = new Buffer.from(base64String, 'base64');
 
-    let buffer = new Buffer(base64String, 'base64');
-
-
+    console.log(fileType.fromBuffer(buffer));
     // let fileMime = fileType(buffer);
-
-
     //     if(fileMime === null) {
     //         return context.fail('The string supplied sis not a file type');
     //     }
-
-
 
         let file = getFile(buffer);
         let params = file.params;

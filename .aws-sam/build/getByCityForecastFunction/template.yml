@@ -30,17 +30,6 @@ Resources:
             Path: /city/{city}
             Method: GET
 
-<<<<<<< HEAD
-  getBucketFilesFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/get-bucket-files.handler
-      Runtime: nodejs14.x
-      MemorySize: 128
-      Timeout: 500
-      Description: Weather forecast information about city
-=======
-
   getFileFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -49,18 +38,28 @@ Resources:
       MemorySize: 128
       Timeout: 500
       Description: Download by END POINT
->>>>>>> de107d20611a357061a012bf9b58328447a42b3e
       Events:
         Api:
           Type: Api
           Properties:
-<<<<<<< HEAD
-            Path: /bucket/{city}
-            Method: GET
-=======
             Path: /files
             Method: GET
-     
+
+  fileUploadFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/file-upload.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Timeout: 500
+      Description: Upload file
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /upload-file
+            Method: POST
+
   uploadFileFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -74,12 +73,8 @@ Resources:
           Type: Api
           Properties:
             Path: /upload
-            Method: POST          
-  
+            Method: POST
 
-
-
->>>>>>> de107d20611a357061a012bf9b58328447a42b3e
 Outputs:
   WebEndpoint:
     Description: 'API Gateway endpoint URL for Prod stage'

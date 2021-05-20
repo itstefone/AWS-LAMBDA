@@ -18,7 +18,6 @@ exports.handler = async (event,context, callback) => {
 const params = {
     Bucket: srcBucket,
     Key: 'image-1.jpg',
-    // response
 }
 
 

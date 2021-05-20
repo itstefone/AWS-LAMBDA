@@ -1,5 +1,7 @@
+'use-strict';
 const axios = require('axios');
-exports.handler= async (event) => {
+exports.handler = async (event) => {
+  let city = event.pathParameters.city;
 
     let city = event.pathParameters.city;
 
@@ -12,6 +14,10 @@ exports.handler= async (event) => {
         body: JSON.stringify(body.data)
     };
 
+  const response = {
+    statusCode: 200,
+    body: JSON.stringify(body.data),
+  };
 
     return response;
 }
