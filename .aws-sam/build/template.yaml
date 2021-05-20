@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: Forecast
+Description: User Forecast
 Transform:
 - AWS::Serverless-2016-10-31
 Resources:
@@ -18,6 +18,7 @@ Resources:
             Path: /city/{city}
             Method: GET
       CodeUri: getByCityForecastFunction
+<<<<<<< HEAD
   getBucketFilesFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -26,13 +27,44 @@ Resources:
       MemorySize: 128
       Timeout: 500
       Description: Weather forecast information about city
+=======
+  getFileFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/get-file.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Timeout: 500
+      Description: Download by END POINT
+>>>>>>> de107d20611a357061a012bf9b58328447a42b3e
       Events:
         Api:
           Type: Api
           Properties:
+<<<<<<< HEAD
             Path: /bucket/{city}
             Method: GET
       CodeUri: getBucketFilesFunction
+=======
+            Path: /files
+            Method: GET
+      CodeUri: getFileFunction
+  uploadFileFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/upload-file.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Timeout: 500
+      Description: Upload file to bucket
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /upload
+            Method: POST
+      CodeUri: uploadFileFunction
+>>>>>>> de107d20611a357061a012bf9b58328447a42b3e
 Outputs:
   WebEndpoint:
     Description: API Gateway endpoint URL for Prod stage

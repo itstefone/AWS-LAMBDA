@@ -5,7 +5,7 @@
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/format-version-structure.html
 AWSTemplateFormatVersion: 2010-09-09
 Description: >-
-  Forecast
+  User Forecast
 
 # Transform section specifies one or more macros that AWS CloudFormation uses to process your template
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-section-structure.html
@@ -30,6 +30,7 @@ Resources:
             Path: /city/{city}
             Method: GET
 
+<<<<<<< HEAD
   getBucketFilesFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -38,12 +39,47 @@ Resources:
       MemorySize: 128
       Timeout: 500
       Description: Weather forecast information about city
+=======
+
+  getFileFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/get-file.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Timeout: 500
+      Description: Download by END POINT
+>>>>>>> de107d20611a357061a012bf9b58328447a42b3e
       Events:
         Api:
           Type: Api
           Properties:
+<<<<<<< HEAD
             Path: /bucket/{city}
             Method: GET
+=======
+            Path: /files
+            Method: GET
+     
+  uploadFileFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/upload-file.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Timeout: 500
+      Description: Upload file to bucket
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /upload
+            Method: POST          
+  
+
+
+
+>>>>>>> de107d20611a357061a012bf9b58328447a42b3e
 Outputs:
   WebEndpoint:
     Description: 'API Gateway endpoint URL for Prod stage'

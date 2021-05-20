@@ -4,8 +4,14 @@
     "version": "0.0.1",
     "private": true,
     "dependencies": {
+<<<<<<< HEAD
         "aws-sdk": "^2.909.0",
         "axios": "^0.21.1"
+=======
+        "aws-sdk": "^2.907.0",
+        "axios": "^0.21.1",
+        "file-type": "^16.4.0"
+>>>>>>> de107d20611a357061a012bf9b58328447a42b3e
     },
     "devDependencies": {
         "jest": "^26.6.3"

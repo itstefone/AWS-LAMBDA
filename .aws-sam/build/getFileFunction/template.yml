@@ -5,16 +5,18 @@
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/format-version-structure.html
 AWSTemplateFormatVersion: 2010-09-09
 Description: >-
-  Forecast
+  User Forecast
 
 # Transform section specifies one or more macros that AWS CloudFormation uses to process your template
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/transform-section-structure.html
 Transform:
-  - AWS::Serverless-2016-10-31
+- AWS::Serverless-2016-10-31
 
 # Resources declares the AWS resources that you want to include in the stack
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
 Resources:
+
+
   getByCityForecastFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -30,21 +32,41 @@ Resources:
             Path: /city/{city}
             Method: GET
 
-  getBucketFilesFunction:
+
+  getFileFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/get-bucket-files.handler
+      Handler: src/handlers/get-file.handler
       Runtime: nodejs14.x
       MemorySize: 128
       Timeout: 500
-      Description: Weather forecast information about city
+      Description: Download by END POINT
       Events:
         Api:
           Type: Api
           Properties:
-            Path: /bucket/{city}
+            Path: /files
             Method: GET
+     
+  uploadFileFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/upload-file.handler
+      Runtime: nodejs14.x
+      MemorySize: 128
+      Timeout: 500
+      Description: Upload file to bucket
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /upload
+            Method: POST          
+  
+
+
+
 Outputs:
   WebEndpoint:
-    Description: 'API Gateway endpoint URL for Prod stage'
-    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod'
+    Description: "API Gateway endpoint URL for Prod stage"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
