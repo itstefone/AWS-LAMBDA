@@ -21,20 +21,30 @@ exports.handler = async (event) => {
   console.log(body);
   const result = await parser.parse(event);
 
+  console.log(result);
+
   let file = result.files[0];
+  // const ext = file.filename.split('.')[1];
+  console.log(file);
+  let uniqueFileName = Math.random().toString(36).substring(7) + file.filename.split('.')[1];
+
+  let url = `https://${srcBucket}.s3.${bucketRegion}.amazonaws.com/${uniqueFileName}`;
 
   let params = {
     Bucket: srcBucket,
-    Key: file.filename,
+    Key: uniqueFileName,
     Body: file.content,
+    ACL: 'public-read'
   };
 
-  let llalal = await s3bucket.putObject(params).promise();
+  
+
+  let s3Result = await s3bucket.putObject(params).promise();
   return {
     statusCode: 200,
     body: JSON.stringify({
-      hello: 'World',
-      llalal,
+      url,
+      s3Result
     }),
   };
 };
